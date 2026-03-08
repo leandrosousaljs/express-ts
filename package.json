@@ -1,0 +1,29 @@
+{
+  "name": "express-ts",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/leandrosousaljs/express-ts.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/leandrosousaljs/express-ts/issues"
+  },
+  "homepage": "https://github.com/leandrosousaljs/express-ts#readme",
+  "dependencies": {
+    "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "@tsconfig/node24": "^24.0.4",
+    "@types/express": "^5.0.6",
+    "typescript": "^5.9.3"
+  }
+}
