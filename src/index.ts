@@ -3,8 +3,22 @@ import type { Express } from 'express';
 
 const app: Express = express();
 
+type Pet = {
+  name: string;
+  species: string;
+  adopted: boolean;
+  age: number;
+};
+
+const pet: Pet = {
+  name: 'Dimi',
+  species: 'Dog',
+  adopted: true,
+  age: 5,
+};
+
 app.get('/', (req, res) => {
-  res.json({});
+  res.json(pet);
 });
 
 const PORT = process.env.PORT || 8000;
