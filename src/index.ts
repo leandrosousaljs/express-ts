@@ -10,15 +10,29 @@ type Pet = {
   age: number;
 };
 
-const pet: Pet = {
-  name: 'Dimi',
-  species: 'Dog',
-  adopted: true,
-  age: 5,
-};
+const pets: Pet[] = [
+  {
+    name: 'Dimi',
+    species: 'Dog',
+    adopted: true,
+    age: 5,
+  },
+  {
+    name: 'Joaquina',
+    species: 'Cat',
+    adopted: true,
+    age: 3,
+  },
+  {
+    name: 'Pepito',
+    species: 'Parrot',
+    adopted: false,
+    age: 10,
+  },
+];
 
 app.get('/', (req, res) => {
-  res.json(pet);
+  res.json(pets);
 });
 
 const PORT = process.env.PORT || 8000;
