@@ -15,7 +15,14 @@ app.get('/', (req: Request, res: Response<Pet[]>): void => {
   res.json(pets);
 });
 
-app.use((req: Request, res: Response<{message: string}>): void => {
+app.get('/:id', (req: Request<{ id: string }>, res: Response<Pet>): void => {
+  const { id } = req.params;
+  const pet = pets.find((pet) => pet.id.toString() === id);
+
+  res.json(pet);
+});
+
+app.use((req: Request, res: Response<{ message: string }>): void => {
   res.status(404).json({ message: 'Endpoint not found' });
 });
 
