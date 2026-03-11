@@ -15,11 +15,15 @@ app.get('/', (req: Request, res: Response<Pet[]>): void => {
   res.json(pets);
 });
 
-app.get('/:id', (req: Request<{ id: string }>, res: Response<Pet>): void => {
+app.get('/:id', (req: Request<{ id: string }>, res: Response<Pet | { message: string }>): void => {
   const { id } = req.params;
-  const pet = pets.find((pet) => pet.id.toString() === id);
+  const pet: Pet | undefined = pets.find((pet: Pet): boolean => pet.id.toString() === id);
 
-  res.json(pet);
+  if (!pet) {
+    res.status(404).json({ message: 'No pet with this ID' });
+  } else {
+    res.json(pet);
+  }
 });
 
 app.use((req: Request, res: Response<{ message: string }>): void => {
