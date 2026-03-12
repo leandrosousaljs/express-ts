@@ -11,8 +11,35 @@ const PORT = process.env.PORT || 8000;
 
 app.use(cors());
 
-app.get('/', (req: Request, res: Response<Pet[]>): void => {
-  res.json(pets);
+type PetQueryParams = {
+  species?: string;
+  adopted?: 'true' | 'false';
+  minAge?: string;
+  maxAge?: string;
+};
+
+app.get('/', (req: Request<{}, unknown, {}, PetQueryParams>, res: Response<Pet[]>): void => {
+  let filteredPets: Pet[] = pets;
+
+  const { species, adopted, minAge, maxAge } = req.query;
+
+  if (species) {
+    filteredPets = filteredPets.filter((pet: Pet): boolean => pet.species.toLowerCase() === species.toLowerCase());
+  }
+
+  if (adopted) {
+    filteredPets = filteredPets.filter((pet: Pet): boolean => pet.adopted === JSON.parse(adopted));
+  }
+
+  if (minAge) {
+    filteredPets = filteredPets.filter((pet: Pet): boolean => pet.age >= parseInt(minAge));
+  }
+
+  if (maxAge) {
+    filteredPets = filteredPets.filter((pet: Pet): boolean => pet.age <= parseInt(maxAge));
+  }
+
+  res.json(filteredPets);
 });
 
 app.get('/:id', (req: Request<{ id: string }>, res: Response<Pet | { message: string }>): void => {
@@ -21,9 +48,10 @@ app.get('/:id', (req: Request<{ id: string }>, res: Response<Pet | { message: st
 
   if (!pet) {
     res.status(404).json({ message: 'No pet with this ID' });
-  } else {
-    res.json(pet);
+    return;
   }
+
+  res.json(pet);
 });
 
 app.use((req: Request, res: Response<{ message: string }>): void => {
